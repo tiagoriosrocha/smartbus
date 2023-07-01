@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         for($i=0; $i<10; $i++){
             $umUsuario = new User();
             $umUsuario->name = $faker->name();
-            $umUsuario->email = $i.$faker->email();
+            $umUsuario->email = $faker->unique()->safeEmail();
             $umUsuario->password = Hash::make('password');
             $umUsuario->save();
         }
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
         //cria um usuário e associa ele em um perfil de motorista
         $umUsuario = new User();
         $umUsuario->name = $faker->name();
-        $umUsuario->email = $faker->email();
+        $umUsuario->email = 'motorista@gmail.com';
         $umUsuario->password = Hash::make('password');
         $umUsuario->save();
         

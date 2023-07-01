@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ApiAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/autenticar/{email}/{password}', [ApiAppController::class, 'autenticarGet']);
+Route::post('/autenticar', [ApiAppController::class, 'autenticarPost']);
+Route::post('/pegarrotas', [ApiAppController::class, 'getRotas']);
+Route::post('/criarviagem', [ApiAppController::class, 'criarViagem']);
+Route::post('/finalizarviagem', [ApiAppController::class, 'finalizarViagem']);
+Route::post('/criarpontopassagem', [ApiAppController::class, 'enviarPontoPassagem']);
