@@ -36,6 +36,6 @@ class Viagem extends Model
 
     public function pontos(): BelongsToMany
     {
-        return $this->belongsToMany(Ponto::class, 'viagem_ponto', 'viagem_id', 'ponto_id');
+        return $this->belongsToMany(Ponto::class, 'viagem_ponto', 'viagem_id', 'ponto_id')->withPivot('status', 'tempo','distancia');
     }
 }

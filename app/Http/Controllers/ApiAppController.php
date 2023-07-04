@@ -76,7 +76,7 @@ class ApiAppController extends Controller
         ]);
         
         if( Auth::attempt($credenciais) ){
-            $rota = Rota::where('id',$request->input('rota_id'))->first();
+            $rota = Rota::where('id',$request->input('rota_id'))->with('pontos')->first();
             $userMotorista = Auth::user();
 
             $umaViagem = new Viagem();
@@ -85,6 +85,9 @@ class ApiAppController extends Controller
             $umaViagem->motorista()->associate($userMotorista);
             $umaViagem->rota()->associate($rota);
             $umaViagem->save();
+            foreach($rota->pontos as $umPonto){
+                $umaViagem->pontos()->attach($umPonto,['status' => 'ativo']);
+            }
             return Response::json($umaViagem);
         }else{
             return Response::json(["error" => "credenciais não conferem"]);
@@ -128,11 +131,26 @@ class ApiAppController extends Controller
         }
     }
 
+    //API Distance Matrix
+    //api: https://developers.google.com/maps/documentation/distance-matrix?hl=pt-br
     public function calcularDistancias($viagemId){
-        $viagem = Viagem::where('id',$viagemId)->with('rota','rota.pontos','motorista','passagens')->first();
+        $viagem = Viagem::where('id',$viagemId)->with('pontos','passagens')->first();
         $ultimoPonto = $viagem->passagens->last();
-        foreach($viagem->rota->pontos as $umPonto){
-            
+        foreach($viagem->pontos as $umPonto){
+            if( $umPonto->status == 'ativo'){
+                //faço cálculo da distância
+                $tempo = 10;
+                //faço o cálculo do tempo
+                $distancia = 10;
+
+                if($tempo < 1 || $distancia < 50){
+                    $umPonto->status = 'inativo';
+                }
+
+                $umPonto->tempo = $tempo;
+                $umPonto->distancia = $distancia;
+                $umPonto->save();
+            }
         }
     }
 }

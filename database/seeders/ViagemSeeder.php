@@ -24,7 +24,7 @@ class ViagemSeeder extends Seeder
 
         //para cada rota
         for($i=1; $i<=4; $i++){
-            $rota = Rota::where('id',$i)->first();
+            $rota = Rota::where('id',$i)->with('pontos')->first();
             $profile = Profile::where('descricao','motorista')->with('user')->get()->first();
             $userMotorista = $profile->user;
             
@@ -49,6 +49,9 @@ class ViagemSeeder extends Seeder
                 $umaViagem->motorista()->associate($userMotorista);
                 $umaViagem->rota()->associate($rota);
                 $umaViagem->save();
+                foreach($rota->pontos as $umPonto){
+                    $umaViagem->pontos()->attach($umPonto,['status' => 'ativo']);
+                }
             }
         }
 

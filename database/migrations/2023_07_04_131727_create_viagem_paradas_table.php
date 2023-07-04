@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('viagem_id');
             $table->unsignedBigInteger('ponto_id');
-            $table->string('status'); //inativa, ativa
-            $table->integer('tempo');
-            $table->integer('distancia');
+            $table->string('status'); //ativo, inativo
+            $table->integer('tempo')->nullable();
+            $table->integer('distancia')->nullable();
             $table->timestamps();
         });
 
