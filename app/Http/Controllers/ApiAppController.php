@@ -127,4 +127,12 @@ class ApiAppController extends Controller
             return Response::json(["error" => "credenciais não conferem"]);
         }
     }
+
+    public function calcularDistancias($viagemId){
+        $viagem = Viagem::where('id',$viagemId)->with('rota','rota.pontos','motorista','passagens')->first();
+        $ultimoPonto = $viagem->passagens->last();
+        foreach($viagem->rota->pontos as $umPonto){
+            
+        }
+    }
 }

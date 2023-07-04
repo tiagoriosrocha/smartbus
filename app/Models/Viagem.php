@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Rota;
 use App\Models\Passagem;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Ponto;
 
 class Viagem extends Model
 {
@@ -30,5 +32,10 @@ class Viagem extends Model
     public function passagens(): HasMany
     {
         return $this->hasMany(Passagem::class);
+    }
+
+    public function pontos(): BelongsToMany
+    {
+        return $this->belongsToMany(Ponto::class, 'viagem_ponto', 'viagem_id', 'ponto_id');
     }
 }
