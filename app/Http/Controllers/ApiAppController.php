@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\User;
 use App\Models\Rota;
@@ -133,24 +134,49 @@ class ApiAppController extends Controller
 
     //API Distance Matrix
     //api: https://developers.google.com/maps/documentation/distance-matrix?hl=pt-br
+    //Calcula a distância do último ponto de passagem de uma viagem
+    //com todos os pontos que fazem parte daquela viagem
+    //atualiza os dados no banco de dados
     public function calcularDistancias($viagemId){
         $viagem = Viagem::where('id',$viagemId)->with('pontos','passagens')->first();
-        $ultimoPonto = $viagem->passagens->last();
+        $ultimaPassagem = $viagem->passagens->last();
+
+        $locationKey = env("GOOGLE_MAPS_DISTANCE_API_KEY");
+        $locationOrigem = $ultimaPassagem->latitude . "," . $ultimaPassagem->longitude;
+        $locationDestino = "";
+
         foreach($viagem->pontos as $umPonto){
-            if( $umPonto->status == 'ativo'){
-                //faço cálculo da distância
-                $tempo = 10;
-                //faço o cálculo do tempo
-                $distancia = 10;
-
-                if($tempo < 1 || $distancia < 50){
-                    $umPonto->status = 'inativo';
+                if($locationDestino == ""){
+                    $locationDestino = $umPonto->latitude . "," . $umPonto->longitude;    
+                }else{
+                    $locationDestino = $locationDestino . "|" . $umPonto->latitude . "," . $umPonto->longitude;
                 }
-
-                $umPonto->tempo = $tempo;
-                $umPonto->distancia = $distancia;
-                $umPonto->save();
-            }
         }
+        $urlApi = "https://maps.googleapis.com/maps/api/distancematrix/json?destinations=$locationDestino&origins=$locationOrigem&units=imperial&key=$locationKey";        
+        //dd($urlApi);
+        $response = Http::get($urlApi);        
+        //dd(json_decode($response->body()));
+        
+        for($i=0; $i < $viagem->pontos->count(); $i++){
+            $distancia = $response['rows'][0]['elements'][$i]['distance']['text'];
+            $tempo = $response['rows'][0]['elements'][$i]['duration']['text'];
+            
+            $umPonto = $viagem->pontos->get($i);
+            Viagem::find($viagemId)->pontos()->updateExistingPivot($umPonto->id,['distancia' => $distancia]);
+            Viagem::find($viagemId)->pontos()->updateExistingPivot($umPonto->id,['tempo' => $tempo]);
+        }
+
+        $viagem = Viagem::where('id',$viagemId)->with('pontos','passagens')->first();
+        return Response::json($viagem->pontos);
+        
+    }
+
+    public function teste(){
+        $locationOrigem = "41.654570,-71.49605";
+        //$locationDestino = "New%20York%20City%2C%20NY|Santa%20Maria%20Rio%20Grande%20do%20Sul%20Brazil";
+        $locationDestino = "41.172536,-71.555274|41.18259,-71.567168|41.341878,-71.695282";
+        $locationKey = env("GOOGLE_MAPS_DISTANCE_API_KEY");
+        $response = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json?destinations=$locationDestino&origins=$locationOrigem&units=imperial&key=$locationKey");
+        dd($response->json());        
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AplicativoMotoristaController;
+use \App\Http\Controllers\ApiAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ Route::get('/', function () {
 
 Route::post('/login', [AplicativoMotoristaController::class, 'fazerLogin']);
 Route::get('/rotas', [AplicativoMotoristaController::class, 'getRotas']);
+Route::get('/teste',[ApiAppController::class, 'teste']);
+Route::get('/calcularDistancias/{idviagem}',[ApiAppController::class, 'calcularDistancias']);
