@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     curl \
-    php7.0-pgsql \
+    pgsql \
     git
 
 # Clear cache
