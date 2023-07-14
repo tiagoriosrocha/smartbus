@@ -44,5 +44,8 @@ RUN composer install
 # Expose the port Laravel will serve on
 EXPOSE 8000
 
+# Create database and seeds
+CMD php artisan migrate:fresh --seed
+
 # Start Laravel's server
 CMD php artisan serve --host=0.0.0.0 --port=8000
