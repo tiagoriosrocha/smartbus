@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     curl \
-    git \
-    php8.0-pgsql
+    pgsql \
+    git
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
