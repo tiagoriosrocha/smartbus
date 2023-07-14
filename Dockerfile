@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     git \
-    php8.1-pgsql
+    php8.0-pgsql
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
