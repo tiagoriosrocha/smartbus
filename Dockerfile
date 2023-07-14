@@ -47,5 +47,8 @@ EXPOSE 8000
 # Create database and seeds
 CMD php artisan migrate:fresh --seed
 
+# Show route list
+CMD php artisan route:list
+
 # Start Laravel's server
 CMD php artisan serve --host=0.0.0.0 --port=8000
