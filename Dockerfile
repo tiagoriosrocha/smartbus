@@ -1,54 +1,38 @@
- # Start from the official PHP 7.4 image
-FROM php:8.1-cli
+FROM php:8.1-apache
 
-# Install system dependencies
+# Install necessary libraries
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    libzip-dev \
     libonig-dev \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    curl \
-    git
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    libzip-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip libpq-dev && docker-php-ext-install
+RUN docker-php-ext-install \
+    mbstring \
+    zip
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Copy Laravel application
+COPY . /var/www/html
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-# Remove the default nginx index page
-RUN rm -rf /var/www/html
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
-
-# Change current user to www
-USER www-data
-
-# Run composer install
+# Install dependencies
 RUN composer install
 
-# Expose the port Laravel will serve on
-EXPOSE 8000
+# Change ownership of our applications
+RUN chown -R www-data:www-data /var/www/html
 
-# Create database and seeds
-CMD php artisan migrate:fresh --seed
+RUN docker-php-ext-install mbstring
 
-# Show route list
-CMD php artisan route:list
+COPY .env.example .env
+RUN php artisan key:generate
 
-# Start Laravel's server
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Expose port 80
+EXPOSE 80
+
+# Adjusting Apache configurations
+RUN a2enmod rewrite
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
