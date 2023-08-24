@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SmartBus - Técnico Integrado em Informática - IFRS - Câmpus Ibirubá</title>
     <!--CSS padrão da pagina-->
     <link rel="stylesheet" href="css/index.css">
     <!--Bootstrap usado-->

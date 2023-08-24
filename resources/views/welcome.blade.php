@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SmartBus - Técnico Integrado em Informática - IFRS - Câmpus Ibirubá</title>
     <!--CSS padrão da pagina-->
     <link rel="stylesheet" href="css/index.css">
     <!--Bootstrap usado-->
@@ -73,7 +73,7 @@
 <div class="margin">
     <div class="container">   
         <ul>
-            <li align="middle"><img src='img\foto1.jpg' margin-bottom="100px" id="img1"></li>
+            <!-- <li align="middle"><img src='img\foto1.jpg' margin-bottom="100px" id="img1"></li> -->
             <li><h2 id="lista">Sobre o Projeto</h2> <p id="texto">
                 Fruto do Projeto Integrador do IFRS Campus Ibirubá, tem o objetivo de facilitar a mobilidade urbana de forma organizada por meio da disponibilização de horários e rotas dos ônibus para os alunos do IFRS, pois percebe-se a falta de informações sobre os transportes públicos, como falta de informação sobre os trajetos percorridos pelo ônibus.</p>
             </li> 
