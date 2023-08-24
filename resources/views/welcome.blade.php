@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/index.css">
     <!--Bootstrap usado-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/lib/bootstrap.min.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--Script usado-->
     <script src="js/index.js"></script>
@@ -73,7 +73,7 @@
 <div class="margin">
     <div class="container">   
         <ul>
-            <!-- <li align="middle"><img src='img\foto1.jpg' margin-bottom="100px" id="img1"></li> -->
+            <li align="middle"><img src='img\foto1.jpg' margin-bottom="100px" id="img1"></li>
             <li><h2 id="lista">Sobre o Projeto</h2> <p id="texto">
                 Fruto do Projeto Integrador do IFRS Campus Ibirubá, tem o objetivo de facilitar a mobilidade urbana de forma organizada por meio da disponibilização de horários e rotas dos ônibus para os alunos do IFRS, pois percebe-se a falta de informações sobre os transportes públicos, como falta de informação sobre os trajetos percorridos pelo ônibus.</p>
             </li> 
