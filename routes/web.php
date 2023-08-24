@@ -31,3 +31,19 @@ Route::post('/pegarrotas', [ApiAppController::class, 'getRotas']);
 Route::post('/criarviagem', [ApiAppController::class, 'criarViagem']);
 Route::post('/finalizarviagem', [ApiAppController::class, 'finalizarViagem']);
 Route::post('/criarpontopassagem', [ApiAppController::class, 'enviarPontoPassagem']);
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/onibus1', function () {
+    return view('onibus1');
+});
+Route::get('/onibus2', function () {
+    return view('onibus2');
+});
+Route::get('/onibus3', function () {
+    return view('onibus3');
+});
+Route::get('/onibus4', function () {
+    return view('onibus4');
+});
