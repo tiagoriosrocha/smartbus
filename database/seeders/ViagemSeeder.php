@@ -43,8 +43,8 @@ class ViagemSeeder extends Seeder
                 }
 
                 $umaViagem = new Viagem();
-                $umaViagem->hora_partida = $faker->dateTimeBetween("2023-05-1 06:00:00",'2023-05-1 06:30:00');
-                $umaViagem->hora_chegada = $faker->dateTimeBetween('2023-05-1 07:30:00','2023-05-1 07:45:00');
+                $umaViagem->hora_partida = $faker->dateTimeBetween("2024-08-1 06:00:00",'2024-08-1 06:30:00');
+                $umaViagem->hora_chegada = $faker->dateTimeBetween('2021-08-1 07:30:00','2024-08-1 07:45:00');
                 $umaViagem->status = $statusViagem;
                 $umaViagem->motorista()->associate($userMotorista);
                 $umaViagem->rota()->associate($rota);

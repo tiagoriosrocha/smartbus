@@ -132,6 +132,21 @@ class ApiAppController extends Controller
         }
     }
 
+    public function detalhesRota(Request $request){
+        $credenciais = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        
+        if( Auth::attempt($credenciais) ){
+            $rotaId = $request['rotaId'];
+            $rota = Rota::where("id", $rotaId)->with('pontos')->first();
+            return Response::json($rota);
+        }else{
+            return Response::json(["error" => "credenciais não conferem"]);
+        }
+    }
+
     //API Distance Matrix
     //api: https://developers.google.com/maps/documentation/distance-matrix?hl=pt-br
     //Calcula a distância do último ponto de passagem de uma viagem

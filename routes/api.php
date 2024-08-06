@@ -25,3 +25,5 @@ Route::post('/pegarrotas', [ApiAppController::class, 'getRotas']);
 Route::post('/criarviagem', [ApiAppController::class, 'criarViagem']);
 Route::post('/finalizarviagem', [ApiAppController::class, 'finalizarViagem']);
 Route::post('/criarpontopassagem', [ApiAppController::class, 'enviarPontoPassagem']);
+Route::post('/rota', [ApiAppController::class, 'detalhesRota']);
+Route::get('/viagem/{id}', [ApiAppController::class, 'pegarViagem']);
